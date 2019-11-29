@@ -1,0 +1,99 @@
+================ RESOLUÇÃO =======================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Nome do País: <input id="pais_nome">
+    <br>
+    População: <input id="pais_populacao">
+    <br>
+    Grau de liberdade econômica: <input id="pais_liberdade">
+    <br>
+    <button onclick="cadastrarPais()">Cadastrar País</button>
+    <br>
+    <button onclick="verHistorico()">Ver histórico</button>
+    <br>
+    <div id="historico"></div>
+</body>
+</html>
+<>
+
+    var paisNome = [];
+    var paisPopulacao = [];
+    var paisLiberdade = [];
+    function cadastrarPais(){
+        var populacaoInformada = Number(pais_populacao.value);
+        var paisLiberdadeInformado = Number(pais_liberdade.value);
+
+        if( populacaoInformada < 1000 
+            || paisLiberdadeInformado < 0
+            || paisLiberdadeInformado > 100){
+                alert("Entradas inválidas!");
+        }else{
+            paisNome.push(pais_nome.value);
+            paisPopulacao.push(populacaoInformada);
+            paisLiberdade.push(paisLiberdadeInformado);
+        }
+    }
+
+    function verHistorico(){
+        for(var indice = 0; indice < paisNome.length; indice++){
+            var nomeDoPais = paisNome[indice];
+            var grauLiberdade = paisLiberdade[indice];
+            var habitantes = paisPopulacao[indice];
+
+            var categoria = '';
+            var IDH = 0;
+            var desempregoMedio = '';
+            var desempregados = 0;
+            var imagem = '';
+
+            if(grauLiberdade <= 50){
+                categoria = 'Reprimido';
+                IDH = 0.50;
+                desempregoMedio = '20%';
+                desempregados = habitantes * 0.20;
+                imagem = './marx.png';
+            }else if(grauLiberdade <= 60){
+                categoria = 'Quase reprimido';
+                IDH = 0.65;
+                desempregoMedio = '15%';
+                desempregados = habitantes * 0.15;
+                imagem = './shaw.png';
+            }else if(grauLiberdade <= 70){
+                categoria = 'Moderadamente livre';
+                IDH = 0.72;
+                desempregoMedio = '10%';
+                desempregados = habitantes * 0.10;
+                imagem = './keynes.png';
+            }else if(grauLiberdade <= 80){
+                categoria = 'Quase livre';
+                IDH = 0.77;
+                desempregoMedio = '7%';
+                desempregados = habitantes * 0.07;
+                imagem = './milton.png';
+            }else {
+                categoria = 'Livre';
+                IDH = 0.85;
+                desempregoMedio = '5%';
+                desempregados = habitantes * 0.05;
+                imagem = './rothbard.png';
+            }
+
+            historico.innerHTML += `País ${indice + 1}: ${nomeDoPais}<br>`;
+            historico.innerHTML += `Categoria: ${categoria}<br>`;
+            historico.innerHTML += `Habitantes: ${habitantes}<br>`;
+            historico.innerHTML += `IDH médio provável: ${IDH}<br>`;
+            historico.innerHTML += `Desemprego médio provável: ${desempregoMedio}, ou seja, talvez ${desempregados} estejam sem emprego<br>`;
+            historico.innerHTML += `<img src=${imagem} width=100 height=100 /><br><br>`;
+
+        }
+    }
+
+</> 
